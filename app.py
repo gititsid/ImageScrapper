@@ -19,10 +19,7 @@ def index():
             search_item = request.form['content'].replace(" ", "")
 
             image_scrapper = ImagesFromGoogle(search_item)
-            urls = image_scrapper.get_image_urls()
-
-            save_as_jpg(urls)
-            push_to_mongodb(urls=urls)
+            urls = image_scrapper.get_image_urls(save_images=False, save_in_mongodb=False)
 
             return "images loaded"
         

@@ -1,5 +1,6 @@
 import sys
 import glob
+import requests
 from PIL import Image
 import streamlit as st
 
@@ -26,17 +27,14 @@ search_item = search_item.replace(' ', '') if ' ' in search_item else search_ite
 
 if search_item: 
     image_scrapper = ImagesFromGoogle(search_item)
-    urls = image_scrapper.get_image_urls()
-    save_as_jpg(urls)
-    
+    urls = image_scrapper.get_image_urls(save_images=False, save_in_mongodb=False)
+
     images = []
-    for img_path in glob.glob(f'./scrapped_images/{search_item}/{search_item}*jpg'):
-        image = Image.open(img_path)
+    for url in urls:
+        image = Image.open(requests.get(list(url.values())[0], stream=True).raw)
         image = image.resize((140, 140))
         images.append(image)
 
     # All Images
     st.subheader(f'Found these images for {search_item}:')
     st.image(images[:18])
-
-    push_to_mongodb(urls=urls)

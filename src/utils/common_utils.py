@@ -36,7 +36,7 @@ def push_to_mongodb(urls: list):
         try:
             logging.info("Creating mongoDB client:")
             # upadte username and password here
-            client = MongoClient("mongodb+srv://algorithm:algorithm@cluster0.90eolay.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+            client = MongoClient("mongodb+srv://<username>:<password>@cluster0.90eolay.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
             if client.admin.command('ping'):
                 logging.info("Pinged your deployment. You successfully connected to MongoDB!")
 
